@@ -1,18 +1,10 @@
 package com.kevin.ttshelper
 
 import android.accessibilityservice.AccessibilityService
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
 import android.content.Intent
 import android.os.Build
-import android.speech.tts.TextToSpeech
 import android.util.Log
-import android.view.WindowManager
 import android.view.accessibility.AccessibilityEvent
-import android.view.accessibility.AccessibilityNodeInfo
-import androidx.appcompat.app.AlertDialog
-import kotlin.math.log
 
 
 /**
@@ -39,13 +31,13 @@ class SpeakAccessibilityService : AccessibilityService(){
     }
 
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
-        if(event?.eventType == AccessibilityEvent.TYPE_VIEW_CLICKED &&rootInActiveWindow.findAccessibilityNodeInfosByText("复制").isNotEmpty()){
-            Log.d(TAG, "onAccessibilityEvent: ${event}")
+        if(event?.eventType == AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED ){
+            Log.d(TAG, "onAccessibilityEvent:text: ${event.text}")
             val rootNodeInfo = rootInActiveWindow
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2 &&event.text.isNotEmpty()&&event.text[0].contains("已复制")) {
                 //val list = rootNodeInfo.findAccessibilityNodeInfosByViewId("com.tencent.mm:id/an3")
-                SpeakService.listener.execute()
-                val intent = Intent(this,TestActivity::class.java)
+//                SpeakService.listener.execute()
+                val intent = Intent(this,SpeakShowActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 applicationContext.startActivity(intent)
             }

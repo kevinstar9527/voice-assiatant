@@ -2,8 +2,8 @@
 <accessibility-service
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:description="@string/speak_name"
-    android:packageNames="com.tencent.mm"
-    android:accessibilityEventTypes="typeViewLongClicked"
+    android:packageNames="com.tencent.mm,com.android.systemui"
+    android:accessibilityEventTypes="typeNotificationStateChanged"
     android:accessibilityFeedbackType="feedbackAllMask"
     android:accessibilityFlags="flagDefault"
     android:canPerformGestures="true"
