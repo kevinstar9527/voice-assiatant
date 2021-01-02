@@ -33,6 +33,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var btnSystem:Button
     lateinit var btnService:Button
     lateinit var btnCheck:Button
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -86,6 +87,7 @@ class MainActivity : AppCompatActivity() {
         btnService = findViewById(R.id.btn_service)
         btnService.setOnClickListener{
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                SpeakService.listener.context = this
                 startForegroundService(Intent(this,SpeakService::class.java));
             } else {
                 //启动引擎服务
@@ -95,9 +97,13 @@ class MainActivity : AppCompatActivity() {
         }
 
         try{
-            startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
+            val settingsIntent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
+            settingsIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(settingsIntent)
         }catch (e:Exception){
-            startActivity(Intent(Settings.ACTION_SETTINGS))
+            val actionSettings = Intent(Settings.ACTION_SETTINGS)
+            actionSettings.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(actionSettings)
         }
 
         btnCheck = findViewById(R.id.btn_check)
@@ -108,6 +114,19 @@ class MainActivity : AppCompatActivity() {
                 Log.d("无障碍检查:", info.id)
             }
         }
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+    }
+
+    override fun onStart() {
+        super.onStart()
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
     }
 
 }

@@ -6,11 +6,12 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
-import android.os.Build
-import android.os.IBinder
+import android.os.*
 import android.speech.tts.TextToSpeech
 import android.util.Log
+import android.view.WindowManager
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.core.app.NotificationCompat
 import java.util.*
 
@@ -18,9 +19,10 @@ import java.util.*
 /**
  * 监听剪切板并读取第条1信息进行语音播报服务
  */
-class SpeakService : Service() {
+class   SpeakService : Service() {
     var clipboardManager: ClipboardManager? = null
     var speakEngine:TextToSpeech? = null
+
     override fun onCreate() {
         super.onCreate()
         val notification = createForegroundNotification()
@@ -34,39 +36,57 @@ class SpeakService : Service() {
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
 
-        if(speakEngine==null){
-            //初始化播报与剪切板引擎
-            speakEngine = TextToSpeech(this) {
-                if(it == TextToSpeech.SUCCESS){
-                    val result = speakEngine?.setLanguage(Locale.CHINA)
-                    if(result != TextToSpeech.LANG_COUNTRY_AVAILABLE && result!=TextToSpeech.LANG_AVAILABLE){
-                        Toast.makeText(this, "TTS暂不支持这种语音的朗读", Toast.LENGTH_SHORT).show()
-                    }
-                }
-            }
-        }
+//        if(speakEngine==null){
+//            //初始化播报与剪切板引擎
+//            speakEngine = TextToSpeech(this) {
+//                if(it == TextToSpeech.SUCCESS){
+//                    val result = speakEngine?.setLanguage(Locale.CHINA)
+//                    if(result != TextToSpeech.LANG_COUNTRY_AVAILABLE && result!=TextToSpeech.LANG_AVAILABLE){
+//                        Toast.makeText(this, "TTS暂不支持这种语音的朗读", Toast.LENGTH_SHORT).show()
+//                    }
+//                }
+//            }
+//        }
+//
+//        if (clipboardManager ==null){
+//            clipboardManager = this.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+//            clipboardManager?.addPrimaryClipChangedListener {
+//                if(clipboardManager!!.hasPrimaryClip()){
+//                    val data: ClipData? = clipboardManager?.primaryClip
+//                    if(data!==null && data.itemCount>0){
+//                        val item = data.getItemAt(0)
+//                        val firstData = item.coerceToText(this)
+//                        speakEngine?.speak("$firstData", TextToSpeech.QUEUE_FLUSH,null)
+//                    }
+//                }
+//            }
+//        }
 
-        if (clipboardManager ==null){
-            clipboardManager = this.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            clipboardManager?.addPrimaryClipChangedListener {
-                if(clipboardManager!!.hasPrimaryClip()){
-                    val data: ClipData? = clipboardManager?.primaryClip
-                    if(data!==null && data.itemCount>0){
-                        val item = data.getItemAt(0)
-                        val firstData = item.coerceToText(this)
-                        speakEngine?.speak("$firstData", TextToSpeech.QUEUE_FLUSH,null)
-                    }
-                }
-            }
-        }
+        listener.context = this
+        listener.service = this
+
+
 
         return START_STICKY
     }
 
     companion object {
         private val TAG = SpeakService::class.java.simpleName
+        public val listener = ServiceListener()
     }
-
+    public fun showSystemDialog(){
+        val builder = AlertDialog.Builder(listener.context)
+        builder.setMessage("测试悬浮")
+        val dialog = builder.create()
+        dialog.setCanceledOnTouchOutside(false)
+        dialog.window?.setDimAmount(0f)
+        if (Build.VERSION.SDK_INT>=26) {//8.0新特性
+            dialog.window?.setType(WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY);
+        }else{
+            dialog.window?.setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+        }
+        dialog.show()
+    }
     /**
      * 创建服务通知
      */
