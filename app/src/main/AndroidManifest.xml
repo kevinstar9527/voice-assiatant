@@ -27,17 +27,17 @@
 
             </intent-filter>
         </activity>
-        <activity android:name=".SpeakShowActivity"
-                  android:screenOrientation="portrait"
-                  android:theme="@style/ActivityDialog"
-            />
+        <activity
+            android:name=".SpeakShowActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityMessageTheme" />
 
         <service
             android:name=".SpeakService"
             />
         <service android:name=".SpeakAccessibilityService"
                  android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
-            >
+                 >
                 <intent-filter>
                     <action android:name="android.accessibilityservice.AccessibilityService" />
                 </intent-filter>

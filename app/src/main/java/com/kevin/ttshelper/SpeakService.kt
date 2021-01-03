@@ -116,9 +116,9 @@ class   SpeakService : Service() {
         //通知小图标
         builder.setSmallIcon(R.mipmap.ic_launcher)
         //通知标题
-        builder.setContentTitle("ContentTitle")
+        builder.setContentTitle("微信语音助手")
         //通知内容
-        builder.setContentText("ContentText")
+        builder.setContentText("语音助手")
         //设定通知显示的时间
         builder.setWhen(System.currentTimeMillis())
         //设定启动的内容
