@@ -32,6 +32,8 @@ object SpeakUtil {
             val item = data.getItemAt(0)
             val firstData = item.coerceToText(App.instance)
             return firstData.toString()
+        }else{
+            Toast.makeText(App.instance, "剪切板中内容为空", Toast.LENGTH_SHORT).show()
         }
         return null
     }

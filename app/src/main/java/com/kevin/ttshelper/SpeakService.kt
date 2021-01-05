@@ -116,7 +116,7 @@ class   SpeakService : Service() {
         val builder = NotificationCompat.Builder(this, notificationChannelId)
 
         //通知小图标
-        builder.setSmallIcon(R.drawable.ic_stat_name)
+        builder.setSmallIcon(R.drawable.ic_small_icon)
         builder.setLargeIcon(BitmapFactory.decodeResource(resources,R.mipmap.ic_launcher))
         //通知标题
         builder.setContentTitle("语音助手")
