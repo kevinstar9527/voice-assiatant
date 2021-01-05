@@ -6,13 +6,21 @@ import android.os.Looper
 import android.view.Gravity
 import android.view.ViewGroup
 import android.view.Window
+import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 
 
 class SpeakShowActivity:AppCompatActivity(){
+    lateinit var btnPause:ImageButton
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_speak_show)
+
+        btnPause = findViewById(R.id.btn_pause)
+        btnPause.setOnClickListener{
+            SpeakUtil.stopSpeak()
+            finish()
+        }
 
         val window: Window = window
         window.setGravity(Gravity.CENTER)

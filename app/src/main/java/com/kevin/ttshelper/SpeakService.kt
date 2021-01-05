@@ -5,6 +5,7 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.*
 import android.speech.tts.TextToSpeech
@@ -94,16 +95,16 @@ class   SpeakService : Service() {
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         // 唯一的通知通道的id.
-        val notificationChannelId = "notification_channel_id_01"
+        val notificationChannelId = packageName
 
         // Android8.0以上的系统，新建消息通道
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             //用户可见的通道名称
-            val channelName = "Foreground Service Notification"
+            val channelName = "SpeakService Notification"
             //通道的重要程度
             val importance = NotificationManager.IMPORTANCE_HIGH
             val notificationChannel = NotificationChannel(notificationChannelId, channelName, importance)
-            notificationChannel.description = "Channel description"
+            notificationChannel.description = "语音助手前台服务"
             //LED灯
             notificationChannel.enableLights(true)
             notificationChannel.lightColor = Color.RED
@@ -113,12 +114,14 @@ class   SpeakService : Service() {
             notificationManager?.createNotificationChannel(notificationChannel)
         }
         val builder = NotificationCompat.Builder(this, notificationChannelId)
+
         //通知小图标
-        builder.setSmallIcon(R.mipmap.ic_launcher)
+        builder.setSmallIcon(R.drawable.ic_stat_name)
+        builder.setLargeIcon(BitmapFactory.decodeResource(resources,R.mipmap.ic_launcher))
         //通知标题
-        builder.setContentTitle("微信语音助手")
+        builder.setContentTitle("语音助手")
         //通知内容
-        builder.setContentText("语音助手")
+        builder.setContentText("微信语音助手")
         //设定通知显示的时间
         builder.setWhen(System.currentTimeMillis())
         //设定启动的内容

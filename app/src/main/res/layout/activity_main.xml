@@ -36,18 +36,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.19999999" />
 
-<!--    <Button-->
-<!--        android:id="@+id/btn_system"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="按钮悬浮"-->
-<!--        app:layout_constraintBottom_toTopOf="@+id/btn_speak"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.5"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/textView" />-->
+    <!--    <Button-->
+    <!--        android:id="@+id/btn_system"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:text="按钮悬浮"-->
+    <!--        app:layout_constraintBottom_toTopOf="@+id/btn_speak"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintHorizontal_bias="0.5"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/textView" />-->
 
     <Button
         android:id="@+id/btn_service"
@@ -85,5 +86,15 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_service" />
+
+    <Button
+        android:id="@+id/btn_exit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="初始化语音引擎"
+        app:layout_constraintEnd_toEndOf="@+id/btn_clipboard"
+        app:layout_constraintStart_toStartOf="@+id/btn_clipboard"
+        app:layout_constraintTop_toBottomOf="@+id/btn_clipboard" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

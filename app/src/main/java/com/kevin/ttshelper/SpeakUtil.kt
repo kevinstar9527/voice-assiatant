@@ -15,15 +15,7 @@ object SpeakUtil {
      * */
     fun speak(word:String){
         if(speakEngine==null){
-            //初始化播报与剪切板引擎
-            speakEngine = TextToSpeech(App.instance) {
-                if(it == TextToSpeech.SUCCESS){
-                    val result = speakEngine?.setLanguage(Locale.CHINA)
-                    if(result != TextToSpeech.LANG_COUNTRY_AVAILABLE && result!= TextToSpeech.LANG_AVAILABLE){
-                        Toast.makeText(App.instance, "TTS暂不支持这种语音的朗读", Toast.LENGTH_SHORT).show()
-                    }
-                }
-            }
+            initEngine()
         }
         speakEngine?.speak(word, TextToSpeech.QUEUE_FLUSH,null)
     }
@@ -50,6 +42,27 @@ object SpeakUtil {
         val word = getFirstClipData()
         if (word != null) {
             speak(word)
+        }
+    }
+    /**
+     * 停止播报
+     * */
+    fun stopSpeak(){
+        speakEngine?.stop()
+    }
+    /**
+     * 初始化引擎
+     * */
+    fun initEngine(){
+        speakEngine = TextToSpeech(App.instance) {
+            if(it == TextToSpeech.SUCCESS){
+                val result = speakEngine?.setLanguage(Locale.CHINA)
+                if(result != TextToSpeech.LANG_COUNTRY_AVAILABLE && result!= TextToSpeech.LANG_AVAILABLE){
+                    Toast.makeText(App.instance, "TTS暂不支持这种语音的朗读", Toast.LENGTH_SHORT).show()
+                }else{
+                    Toast.makeText(App.instance, "语音引擎初始化成功!", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
     }
 }

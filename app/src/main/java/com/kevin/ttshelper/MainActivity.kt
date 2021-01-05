@@ -1,30 +1,19 @@
 package com.kevin.ttshelper
 
 import android.accessibilityservice.AccessibilityServiceInfo
-import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
-import android.content.ClipData
-import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
 import android.speech.tts.TextToSpeech
 import android.util.Log
-import android.view.WindowManager
 import android.view.accessibility.AccessibilityManager
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
-import androidx.core.app.NotificationCompat
 import java.lang.Exception
-import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -35,6 +24,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var btnService:Button
     lateinit var btnCheck:Button
     lateinit var testWord:TextView
+    lateinit var btnInitEngine:Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -43,8 +33,7 @@ class MainActivity : AppCompatActivity() {
 
         btnSpeak = findViewById(R.id.btn_speak)
         btnSpeak.setOnClickListener{
-
-                val word =  if(testWord.text!=null) testWord.text else "你好世界"
+                val word =  if(testWord.text.isNotEmpty()) testWord.text else "你好世界"
                 SpeakUtil.speak(word.toString())
 
         }
@@ -54,22 +43,6 @@ class MainActivity : AppCompatActivity() {
         btnClipboard.setOnClickListener{
                SpeakUtil.speakFirstClipData()
         }
-
-//        btnSystem = findViewById(R.id.btn_system)
-//        btnSystem.setOnClickListener{
-//            val builder = AlertDialog.Builder(this)
-//            builder.setMessage("测试悬浮")
-//            val dialog = builder.create()
-//            dialog.setCanceledOnTouchOutside(false)
-//            dialog.window?.setDimAmount(0f)
-//            if (Build.VERSION.SDK_INT>=26) {//8.0新特性
-//                dialog.window?.setType(WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY);
-//            }else{
-//                dialog.window?.setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-//            }
-//            dialog.show()
-//
-//        }
 
         btnService = findViewById(R.id.btn_service)
         btnService.setOnClickListener{
@@ -93,6 +66,11 @@ class MainActivity : AppCompatActivity() {
         btnCheck = findViewById(R.id.btn_check)
         btnCheck.setOnClickListener{
             checkAccessibilityServiceIsOpen()
+        }
+
+        btnInitEngine = findViewById(R.id.btn_exit)
+        btnInitEngine.setOnClickListener{
+           SpeakUtil.initEngine()
         }
     }
 
